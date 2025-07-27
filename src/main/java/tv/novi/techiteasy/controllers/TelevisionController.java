@@ -18,15 +18,8 @@ public class TelevisionController {
         this.database = new ArrayList<>();
     }
 
-
-    //voorbeeld
-//    @GetMapping
-//    public ResponseEntity <List<String>> getTelevision() {
-//        return ResponseEntity.ok ( database );
-//    }
-
     @GetMapping
-    public ResponseEntity <List<String>> getTelevision(@RequestParam(required=false) String name) {
+    public ResponseEntity<List<String>> getTelevision(@RequestParam(required = false) String name) {
         if (name != null) {
             List<String> toReturn = new ArrayList<>();
             for (String television : database) {
@@ -40,28 +33,6 @@ public class TelevisionController {
         }
     }
 
-// voorbeeld
-//    @GetMapping("/{id}")
-//    public ResponseEntity <String> getOneTelevision(@PathVariable int id) {
-//        if (database.size() < id || id == 0){
-//            return ResponseEntity.notFound().build();
-//        }
-//        String television = database.get(--id);
-//        return ResponseEntity.ok ( television );
-//    }
-
-//    @GetMapping("/{id}")
-//    public ResponseEntity <String> getOneTelevision(@PathVariable int id) {
-//        String television;
-//       try {
-//           television = database.get(--id);
-//       } catch (IndexOutOfBoundsException e ) {
-//           return ResponseEntity.notFound().build();
-//       }
-//
-//        return ResponseEntity.ok ( television );
-//    }
-
     @GetMapping("/{id}")
     public ResponseEntity<String> getOneTelevision(@PathVariable int id) {
         String television = database.get(--id);
@@ -72,7 +43,6 @@ public class TelevisionController {
     public ResponseEntity<?> postTelevision(@RequestBody String television) {
         database.add(television.trim());
         return ResponseEntity.created(URI.create("localhost:8080/televisions/" + database.size())).build();
-
     }
 
     @PutMapping("/{id}")
@@ -84,20 +54,10 @@ public class TelevisionController {
             return ResponseEntity.notFound().build();
         }
     }
-// voorbeeld
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String> deleteTelevision(@PathVariable int id) {
-//        try {
-//            database.remove(id - 1);
-//            return ResponseEntity.ok("Television deleted.");
-//        } catch (IndexOutOfBoundsException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTelevision(@PathVariable int id) {
-           return ResponseEntity.ok("Television deleted.");
+        return ResponseEntity.ok("Television deleted.");
     }
 
 }
