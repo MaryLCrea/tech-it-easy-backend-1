@@ -1,3 +1,4 @@
+
 package tv.novi.techiteasy.exceptions;
 
 public class RecordNotFoundException extends RuntimeException {
