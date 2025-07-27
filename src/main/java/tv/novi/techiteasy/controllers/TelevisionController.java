@@ -43,7 +43,6 @@ public class TelevisionController {
     public ResponseEntity<?> postTelevision(@RequestBody String television) {
         database.add(television.trim());
         return ResponseEntity.created(URI.create("localhost:8080/televisions/" + database.size())).build();
-
     }
 
     @PutMapping("/{id}")
