@@ -57,7 +57,8 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-    public Television() { }
+    public Television() {
+    }
 
     public LocalDate getSoldDate() {
         return soldDate;
@@ -75,7 +76,8 @@ public class Television {
         this.originalStockDate = originalStockDate;
     }
 
-    public void Car() {}
+    public void Car() {
+    }
 
     public Long getId() {
         return id;
