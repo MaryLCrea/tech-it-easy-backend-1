@@ -29,7 +29,7 @@ public class Television {
         this.sold = sold;
     }
 
-    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, int refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambilight, Integer originalStock, Integer sold) {
+    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, LocalDate soldDate, LocalDate originalStockDate, int refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambilight, Integer originalStock, Integer sold) {
         this.id = id;
         this.type = type;
         this.brand = brand;
@@ -75,9 +75,6 @@ public class Television {
 
     public void setOriginalStockDate(LocalDate originalStockDate) {
         this.originalStockDate = originalStockDate;
-    }
-
-    public void Car() {
     }
 
     public Long getId() {
@@ -128,9 +125,7 @@ public class Television {
         this.availableSize = availableSize;
     }
 
-    public int getRefreshRate() {
-        return refreshRate;
-    }
+    public int getRefreshRate() { return refreshRate;     }
 
     public void setRefreshRate(int refreshRate) {
         this.refreshRate = refreshRate;
@@ -192,14 +187,6 @@ public class Television {
         this.bluetooth = bluetooth;
     }
 
-    public Boolean getAmbilight() {
-        return ambilight;
-    }
-
-    public void setAmbilight(Boolean ambilight) {
-        this.ambilight = ambilight;
-    }
-
     public Integer getOriginalStock() {
         return originalStock;
     }
@@ -215,4 +202,11 @@ public class Television {
     public void setSold(Integer sold) {
         this.sold = sold;
     }
+
+    public void setAmbilight(Object ambilight) {
+    }
+
+    public Object getAmbilight() {return ambilight;
+    }
 }
+
