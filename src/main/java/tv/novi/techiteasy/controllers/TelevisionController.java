@@ -1,63 +1,59 @@
 package tv.novi.techiteasy.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tv.novi.techiteasy.dtos.TelevisionRequestDto;
+import tv.novi.techiteasy.dtos.TelevisionResponseDto;
+import tv.novi.techiteasy.services.TelevisionService;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/televisions")
-
 public class TelevisionController {
 
-    private final List<String> database;
+    private final TelevisionService televisionService;
 
-    public TelevisionController() {
-        this.database = new ArrayList<>();
+    @Autowired
+    public TelevisionController(TelevisionService televisionService) {
+        this.televisionService = televisionService;
     }
+
 
     @GetMapping
-    public ResponseEntity<List<String>> getTelevision(@RequestParam(required = false) String name) {
-        if (name != null) {
-            List<String> toReturn = new ArrayList<>();
-            for (String television : database) {
-                if (television.contains(name)) {
-                    toReturn.add(television);
-                }
-            }
-            return ResponseEntity.ok(toReturn);
-        } else {
-            return ResponseEntity.ok(database);
-        }
+    public ResponseEntity<List<TelevisionResponseDto>> getAllTelevisions() {
+        List<TelevisionResponseDto> televisions = televisionService.getAllTelevisions();
+        return ResponseEntity.ok(televisions);
     }
+
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getOneTelevision(@PathVariable int id) {
-        String television = database.get(--id);
-        return ResponseEntity.ok(television);
+    public ResponseEntity<TelevisionResponseDto> getOneTelevision(@PathVariable Long id) {
+        TelevisionResponseDto television = televisionService.getTelevisionById(id);
+        return ResponseEntity.ok().body(television);
     }
+
 
     @PostMapping
-    public ResponseEntity<?> postTelevision(@RequestBody String television) {
-        database.add(television.trim());
-        return ResponseEntity.created(URI.create("localhost:8080/televisions/" + database.size())).build();
+    public ResponseEntity<TelevisionResponseDto> postTelevision(@RequestBody TelevisionRequestDto inputDto) {
+        TelevisionResponseDto saved = televisionService.saveTelevision(inputDto);
+        return ResponseEntity.created(URI.create("/televisions/" + saved.getId())).body(saved);
     }
+
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateTelevision(@PathVariable int id, @RequestBody String updatedTelevision) {
-        try {
-            database.set(id - 1, updatedTelevision.trim());
-            return ResponseEntity.ok("Television updated.");
-        } catch (IndexOutOfBoundsException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<TelevisionResponseDto> update(@PathVariable Long id, @RequestBody TelevisionRequestDto inputDto) {
+        TelevisionResponseDto updatedDto = televisionService.updateTelevision(id, inputDto);
+        return ResponseEntity.ok(updatedDto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTelevision(@PathVariable int id) {
-        return ResponseEntity.ok("Television deleted.");
+   @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTelevision(@PathVariable Long id) {
+        televisionService.deleteTelevision(id);
+        return ResponseEntity.noContent().build();
     }
-
 }
