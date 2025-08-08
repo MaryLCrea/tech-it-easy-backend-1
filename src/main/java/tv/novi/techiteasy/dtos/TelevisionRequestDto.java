@@ -1,6 +1,9 @@
 package tv.novi.techiteasy.dtos;
 import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
+
 public class TelevisionRequestDto {
 
     @NotNull(message = "Type is required")
@@ -15,8 +18,8 @@ public class TelevisionRequestDto {
     private int refreshRate;
     private String screenType;
     private String screenQuality;
-    private String soldDate;
-    private String originalStockDate;
+    private LocalDate soldDate;
+    private LocalDate originalStockDate;
     private Boolean ambilight;
     private Boolean blueTooth;
     private Boolean hdr;
@@ -25,6 +28,7 @@ public class TelevisionRequestDto {
     private Integer sold;
     private Boolean voiceControl;
     private Boolean wifi;
+
 
     public String getType() {return type;    }
     public void setType(String type) {
@@ -80,31 +84,26 @@ public class TelevisionRequestDto {
         this.screenQuality = screenQuality;
     }
 
-    public String getSoldDate() {
-        return soldDate;
-    }
+    public LocalDate getSoldDate() { return soldDate;   }
     public void setSoldDate(String soldDate) {
-        this.soldDate = soldDate;
+        this.soldDate = LocalDate.parse(soldDate);
     }
 
-    public String getOriginalStockDate() {
+    public LocalDate getOriginalStockDate() {
         return originalStockDate;
     }
     public void setOriginalStockDate(String originalStockDate) {
-        this.originalStockDate = originalStockDate;
+        this.originalStockDate = LocalDate.parse(originalStockDate);
     }
 
-    public Object getAmbiLight() {
+    public Boolean getAmbilight() {
         return ambilight;
     }
     public void setAmbilight(Boolean ambilight) { this.ambilight = ambilight;    }
 
-
     public Boolean getBluetooth() {
         return blueTooth;
     }
-
-
     public void setBlueTooth(Boolean blueTooth) {
         this.blueTooth = blueTooth;
     }
@@ -112,7 +111,6 @@ public class TelevisionRequestDto {
     public Boolean getHdr() {
         return hdr;
     }
-
     public void setHdr(Boolean hdr) {
         this.hdr = hdr;
     }
@@ -120,7 +118,6 @@ public class TelevisionRequestDto {
     public Integer getOriginalStock() {
         return originalStock;
     }
-
     public void setOriginalStock(Integer originalStock) {
         this.originalStock = originalStock;
     }
@@ -128,14 +125,13 @@ public class TelevisionRequestDto {
     public Boolean getSmartTv() {
         return smartTv;
     }
-
     public void setSmartTv(Boolean smartTv) {
         this.smartTv = smartTv;
     }
+
     public Integer getSold() {
         return sold;
     }
-
     public void setSold(Integer sold) {
         this.sold = sold;
     }
@@ -143,7 +139,6 @@ public class TelevisionRequestDto {
     public Boolean getVoiceControl() {
         return voiceControl;
     }
-
     public void setVoiceControl(Boolean voiceControl) {
         this.voiceControl = voiceControl;
     }
@@ -151,14 +146,8 @@ public class TelevisionRequestDto {
     public Boolean getWifi() {
         return wifi;
     }
-
-
     public void setWifi(Boolean wifi) {
         this.wifi = wifi;
-    }
-
-    public Object getAmbilight() {
-        return ambilight;
     }
 }
 

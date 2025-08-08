@@ -1,9 +1,7 @@
 package tv.novi.techiteasy.models;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
-
 
 @Entity
 @Table(name = "TV")
@@ -21,15 +19,33 @@ public class Television {
     private int refreshRate;
     private String screenType;
     private String screenQuality;
-    private LocalDate soldDate; // Verkoopdatum
-    private LocalDate originalStockDate; // Inkoopdatum
+    private LocalDate soldDate;
+    private LocalDate originalStockDate;
+    private Boolean smartTv;
+    private Boolean wifi;
+    private Boolean voiceControl;
+    private Boolean hdr;
+    private Boolean bluetooth;
+    private Boolean ambilight;  // Changed from Object to Boolean
+    private Integer originalStock;
+    private Integer sold;
 
+    // Default constructor
+    public Television() {
+    }
+
+    // Constructor with originalStock and sold only
     public Television(Integer originalStock, Integer sold) {
         this.originalStock = originalStock;
         this.sold = sold;
     }
 
-    public Television(Long id, String type, String brand, String name, Double price, Double availableSize, LocalDate soldDate, LocalDate originalStockDate, int refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambilight, Integer originalStock, Integer sold) {
+    // Full constructor
+    public Television(Long id, String type, String brand, String name, Double price,
+                      Double availableSize, int refreshRate, String screenType,
+                      String screenQuality, LocalDate soldDate, LocalDate originalStockDate,
+                      Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr,
+                      Boolean bluetooth, Boolean ambilight, Integer originalStock, Integer sold) {
         this.id = id;
         this.type = type;
         this.brand = brand;
@@ -39,6 +55,8 @@ public class Television {
         this.refreshRate = refreshRate;
         this.screenType = screenType;
         this.screenQuality = screenQuality;
+        this.soldDate = soldDate;
+        this.originalStockDate = originalStockDate;
         this.smartTv = smartTv;
         this.wifi = wifi;
         this.voiceControl = voiceControl;
@@ -49,34 +67,7 @@ public class Television {
         this.sold = sold;
     }
 
-    private Boolean smartTv;
-    private Boolean wifi;
-    private Boolean voiceControl;
-    private Boolean hdr;
-    private Boolean bluetooth;
-    private Boolean ambilight;
-    private Integer originalStock;
-    private Integer sold;
-
-    public Television() {
-    }
-
-    public LocalDate getSoldDate() {
-        return soldDate;
-    }
-
-    public void setSoldDate(LocalDate soldDate) {
-        this.soldDate = soldDate;
-    }
-
-    public LocalDate getOriginalStockDate() {
-        return originalStockDate;
-    }
-
-    public void setOriginalStockDate(LocalDate originalStockDate) {
-        this.originalStockDate = originalStockDate;
-    }
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -125,7 +116,9 @@ public class Television {
         this.availableSize = availableSize;
     }
 
-    public int getRefreshRate() { return refreshRate;     }
+    public int getRefreshRate() {
+        return refreshRate;
+    }
 
     public void setRefreshRate(int refreshRate) {
         this.refreshRate = refreshRate;
@@ -145,6 +138,22 @@ public class Television {
 
     public void setScreenQuality(String screenQuality) {
         this.screenQuality = screenQuality;
+    }
+
+    public LocalDate getSoldDate() {
+        return soldDate;
+    }
+
+    public void setSoldDate(LocalDate soldDate) {
+        this.soldDate = soldDate;
+    }
+
+    public LocalDate getOriginalStockDate() {
+        return originalStockDate;
+    }
+
+    public void setOriginalStockDate(LocalDate originalStockDate) {
+        this.originalStockDate = originalStockDate;
     }
 
     public Boolean getSmartTv() {
@@ -187,6 +196,14 @@ public class Television {
         this.bluetooth = bluetooth;
     }
 
+    public Boolean getAmbilight() {  // Changed return type from Object to Boolean
+        return ambilight;
+    }
+
+    public void setAmbilight(Boolean ambilight) {  // Changed parameter type from Object to Boolean
+        this.ambilight = ambilight;
+    }
+
     public Integer getOriginalStock() {
         return originalStock;
     }
@@ -202,11 +219,4 @@ public class Television {
     public void setSold(Integer sold) {
         this.sold = sold;
     }
-
-    public void setAmbilight(Object ambilight) {
-    }
-
-    public Object getAmbilight() {return ambilight;
-    }
 }
-

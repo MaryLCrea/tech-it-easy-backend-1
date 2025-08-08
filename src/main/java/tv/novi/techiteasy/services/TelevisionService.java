@@ -1,103 +1,3 @@
-//package tv.novi.techiteasy.services;
-//
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//import tv.novi.techiteasy.dtos.TelevisionRequestDto;
-//import tv.novi.techiteasy.dtos.TelevisionResponseDto;
-//import tv.novi.techiteasy.models.Television;
-//import tv.novi.techiteasy.repositories.TelevisionRepository;
-//import tv.novi.techiteasy.exceptions.RecordNotFoundException;
-//import java.util.List;
-//import java.util.stream.Collectors;
-//import org.springframework.stereotype.Service;
-//import org.springframework.web.bind.annotation.RequestBody;
-//
-//@Service
-//public class TelevisionService {
-//
-//    private final TelevisionRepository televisionRepository;
-//
-//    @Autowired
-//    public TelevisionService(TelevisionRepository televisionRepository) {
-//        this.televisionRepository = televisionRepository;
-//    }
-//
-//
-//    public static TelevisionResponseDto toDto(Television television) {
-//        TelevisionResponseDto dto = new TelevisionResponseDto();
-//        dto.setId(television.getId());
-//        dto.setType(television.getType());
-//        dto.setBrand(television.getBrand());
-//        dto.setName(television.getName());
-//        dto.setPrice(television.getPrice());
-//        dto.setAvailableSize(television.getAvailableSize());
-//        dto.setRefreshRate(String.valueOf(television.getRefreshRate()));
-//        dto.setScreenType(television.getScreenType());
-//        dto.setScreenQuality(television.getScreenQuality());
-//        dto.setSoldDate(television.getSoldDate());
-//        dto.setOriginalStockDate(television.getOriginalStockDate());
-//        return dto;
-//    }
-//
-//    // DTO -> Entity
-//    public static Television toEntity(TelevisionRequestDto inputDto) {
-//        Television tv = new Television();
-//        tv.setType(inputDto.getType());
-//        tv.setBrand(inputDto.getBrand());
-//        tv.setName(inputDto.getName());
-//        tv.setPrice(inputDto.getPrice());
-//        tv.setAvailableSize(inputDto.getAvailableSize());
-//        tv.setRefreshRate(inputDto.getRefreshRate());
-//        tv.setScreenType(inputDto.getScreenType());
-//        tv.setScreenQuality(inputDto.getScreenQuality());
-//        tv.setSoldDate(inputDto.getSoldDate());
-//        tv.setOriginalStockDate(inputDto.getOriginalStockDate());
-//        return tv;
-//    }
-//
-//    public List<TelevisionResponseDto> getAllTelevisions() {
-//        return televisionRepository.findAll()
-//                .stream()
-//                .map(TelevisionService::toDto)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public TelevisionResponseDto getTelevisionById(Long id) {
-//        Television tv = televisionRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Television not found"));
-//        return toDto(tv);
-//    }
-//
-//    public TelevisionResponseDto saveTelevision(TelevisionRequestDto inputDto) {
-//        Television tv = toEntity(inputDto);
-//        Television saved = televisionRepository.save(tv);
-//        return toDto(saved);
-//    }
-//
-//    public TelevisionResponseDto updateTelevision(Long id, TelevisionRequestDto inputDto) {
-//        Television existing = televisionRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Television not found"));
-//
-//        existing.setType(inputDto.getType());
-//        existing.setBrand(inputDto.getBrand());
-//        existing.setName(inputDto.getName());
-//        existing.setPrice(inputDto.getPrice());
-//        existing.setAvailableSize(inputDto.getAvailableSize());
-//        existing.setRefreshRate(inputDto.getRefreshRate());
-//        existing.setScreenType(inputDto.getScreenType());
-//        existing.setScreenQuality(inputDto.getScreenQuality());
-//        existing.setSoldDate(inputDto.getSoldDate());
-//        existing.setOriginalStockDate(inputDto.getOriginalStockDate());
-//        Television updated = televisionRepository.save(existing);
-//        return toDto(updated);
-//    }
-//
-//    public void deleteTelevision(Long id) {
-//        televisionRepository.deleteById(id);
-//        }
-//    }
-
 package tv.novi.techiteasy.services;
 
 import tv.novi.techiteasy.dtos.TelevisionRequestDto;
@@ -112,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class TelevisionService {
+
 
     private final TelevisionRepository televisionRepository;
 
@@ -222,11 +122,12 @@ public class TelevisionService {
         television.setAmbilight(dto.getAmbilight());
         television.setOriginalStock(dto.getOriginalStock());
         television.setSold(dto.getSold());
+        television.setSoldDate(dto.getSoldDate());
+        television.setOriginalStockDate(dto.getOriginalStockDate());
 
         return television;
     }
-
-        public TelevisionResponseDto transferToDto(Television television){
+    public TelevisionResponseDto transferToDto(Television television) {
         TelevisionResponseDto dto = new TelevisionResponseDto();
 
         dto.setId(television.getId());
@@ -243,28 +144,19 @@ public class TelevisionService {
         dto.setVoiceControl(television.getVoiceControl());
         dto.setHdr(television.getHdr());
         dto.setBluetooth(television.getBluetooth());
-        dto.setAmbiLight(television.getAmbilight());
+        dto.setAmbilight(television.getAmbilight());
         dto.setOriginalStock(television.getOriginalStock());
         dto.setSold(television.getSold());
+        dto.setSoldDate(television.getSoldDate());
+        dto.setOriginalStockDate(television.getOriginalStockDate());
 
         return dto;
     }
 
     public TelevisionResponseDto saveTelevision(TelevisionRequestDto inputDto) {
-        Television tv = new Television();
-        tv.setBrand(inputDto.getBrand());
-        tv.setName(inputDto.getName());
-        tv.setPrice(inputDto.getPrice());
-
+        Television tv = transferToTelevision(inputDto);
         televisionRepository.save(tv);
 
-        TelevisionResponseDto dto = new TelevisionResponseDto();
-        dto.setId(tv.getId());
-        dto.setBrand(tv.getBrand());
-        dto.setName(tv.getName());
-        dto.setPrice(tv.getPrice());
-
-
-        return dto;
+        return transferToDto(tv);
     }
 }
